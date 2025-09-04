@@ -16,6 +16,7 @@ class EIMU_V2_FULL:
                     raise Exception("[Timeout] No response from ESP32")
             except:
                 print("[Timeout] No response from ESP32")
+                return "XXX"
         return data
     
     def send(self, cmd_route, motor_no, val):

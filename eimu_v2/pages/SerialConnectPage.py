@@ -72,8 +72,7 @@ class SerialConnectFrame(tb.Frame):
     try:
       g.eimuV2 = EIMU_V2_FULL(port)
       time.sleep(2)
-      g.eimuV2.setWorldFrameId(1)
-      return True
+      data = g.eimuV2.getFilterGain()
     except:
       return False
 
@@ -90,8 +89,8 @@ class SerialConnectFrame(tb.Frame):
     serIsConnected = self.connectToPort(port)
     if serIsConnected:
       # print("connection successful")
-      Messagebox.show_info(f"SUCCESS:\n\nEPMC Module found on port: {port}\n\nclick OK to continue", "SUCCESS")
+      Messagebox.show_info(f"SUCCESS:\n\nEIMU V2 Module found on port: {port}\n\nclick OK to continue", "SUCCESS")
       self.next_func()
     else:
       # print("Error connecting to driver")
-      Messagebox.show_error(f"ERROR:\n\nno EPMC Module found on port: {port}\n\ntry again or try another port", "ERROR")
+      Messagebox.show_error(f"ERROR:\n\nno EIMU V2 Module found on port: {port}\n\ntry again or try another port", "ERROR")
