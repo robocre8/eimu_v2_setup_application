@@ -29,9 +29,7 @@ class OrientationVarianceFrame(tb.Frame):
     self.pValFrame = tb.Frame(self)
     self.yValFrame = tb.Frame(self)
 
-    r = g.eimuV2.readRPYVariance(0)
-    p = g.eimuV2.readRPYVariance(1)
-    y = g.eimuV2.readRPYVariance(2)
+    r, p, y = g.eimuV2.readRPYVariance()
 
     self.rText = tb.Label(self.rValFrame, text="R-VARIANCE:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.rVal = tb.Label(self.rValFrame, text=f'{r}', font=('Monospace',10), bootstyle="dark")
@@ -106,9 +104,7 @@ class OrientationVarianceFrame(tb.Frame):
       self.pVal.configure(text="0.0")
       self.yVal.configure(text="0.0")
 
-      r = g.eimuV2.readRPY(0)
-      p = g.eimuV2.readRPY(1)
-      y = g.eimuV2.readRPY(2)
+      r, p, y = g.eimuV2.readRPY()
 
       self.r_arr.append(r)
       self.p_arr.append(p)
@@ -137,13 +133,9 @@ class OrientationVarianceFrame(tb.Frame):
     p_variance = np.var(self.p_arr)
     y_variance = np.var(self.y_arr)
 
-    g.eimuV2.writeRPYVariance(0, r_variance)
-    g.eimuV2.writeRPYVariance(1, p_variance)
-    g.eimuV2.writeRPYVariance(2, y_variance)
+    g.eimuV2.writeRPYVariance(r_variance, p_variance, y_variance)
 
-    r_variance = g.eimuV2.readRPYVariance(0)
-    p_variance = g.eimuV2.readRPYVariance(1)
-    y_variance = g.eimuV2.readRPYVariance(2)
+    r_variance, p_variance, y_variance = g.eimuV2.readRPYVariance()
 
     self.rVal.configure(text=f'{r_variance}')
     self.pVal.configure(text=f'{p_variance}')

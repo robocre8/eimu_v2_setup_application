@@ -29,9 +29,7 @@ class AccVarianceFrame(tb.Frame):
     self.ayValFrame = tb.Frame(self)
     self.azValFrame = tb.Frame(self)
 
-    ax = g.eimuV2.readAccVariance(0)
-    ay = g.eimuV2.readAccVariance(1)
-    az = g.eimuV2.readAccVariance(2)
+    ax, ay, az = g.eimuV2.readAccVariance()
 
     self.axText = tb.Label(self.axValFrame, text="AX-VARIANCE:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.axVal = tb.Label(self.axValFrame, text=f'{ax}', font=('Monospace',10), bootstyle="dark")
@@ -106,9 +104,7 @@ class AccVarianceFrame(tb.Frame):
       self.ayVal.configure(text="0.0")
       self.azVal.configure(text="0.0")
 
-      accx_cal = g.eimuV2.readAcc(0)
-      accy_cal = g.eimuV2.readAcc(1)
-      accz_cal = g.eimuV2.readAcc(2)
+      accx_cal, accy_cal, accz_cal = g.eimuV2.readAcc()
 
       self.accx_arr.append(accx_cal)
       self.accy_arr.append(accy_cal)
@@ -137,13 +133,9 @@ class AccVarianceFrame(tb.Frame):
     accy_variance = np.var(self.accy_arr)
     accz_variance = np.var(self.accz_arr)
 
-    g.eimuV2.writeAccVariance(0, accx_variance)
-    g.eimuV2.writeAccVariance(1, accy_variance)
-    g.eimuV2.writeAccVariance(2, accz_variance)
+    g.eimuV2.writeAccVariance(accx_variance, accy_variance, accz_variance)
 
-    accx_variance = g.eimuV2.readAccVariance(0)
-    accy_variance = g.eimuV2.readAccVariance(1)
-    accz_variance = g.eimuV2.readAccVariance(2)
+    accx_variance, accy_variance, accz_variance = g.eimuV2.readAccVariance()
 
     self.axVal.configure(text=f'{accx_variance}')
     self.ayVal.configure(text=f'{accy_variance}')

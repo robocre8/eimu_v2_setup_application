@@ -71,9 +71,7 @@ class ImuVisualizeFrame(tb.Frame):
     self.gyValFrame = tb.Frame(self.angularVelValFrame)
     self.gzValFrame = tb.Frame(self.angularVelValFrame)
 
-    r = g.eimuV2.readRPY(0)
-    p = g.eimuV2.readRPY(1)
-    y = g.eimuV2.readRPY(2)
+    r, p, y = g.eimuV2.readRPY()
 
     self.rText = tb.Label(self.rValFrame, text="R:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.rVal = tb.Label(self.rValFrame, text=f'{r}', font=('Monospace',10), bootstyle="dark")
@@ -84,9 +82,7 @@ class ImuVisualizeFrame(tb.Frame):
     self.yText = tb.Label(self.yValFrame, text="Y:", font=('Monospace',10, 'bold') ,bootstyle="primary")
     self.yVal = tb.Label(self.yValFrame, text=f'{y}', font=('Monospace',10), bootstyle="dark")
 
-    ax = g.eimuV2.readAcc(0)
-    ay = g.eimuV2.readAcc(1)
-    az = g.eimuV2.readAcc(2)
+    ax, ay, az = g.eimuV2.readAcc()
 
     self.axText = tb.Label(self.axValFrame, text="AX:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.axVal = tb.Label(self.axValFrame, text=f'{ax}', font=('Monospace',10), bootstyle="dark")
@@ -97,9 +93,7 @@ class ImuVisualizeFrame(tb.Frame):
     self.azText = tb.Label(self.azValFrame, text="AZ:", font=('Monospace',10, 'bold') ,bootstyle="primary")
     self.azVal = tb.Label(self.azValFrame, text=f'{az}', font=('Monospace',10), bootstyle="dark")
 
-    gx = g.eimuV2.readGyro(0)
-    gy = g.eimuV2.readGyro(1)
-    gz = g.eimuV2.readGyro(2)
+    gx, gy, gz = g.eimuV2.readGyro()
 
     self.gxText = tb.Label(self.axValFrame, text="GX:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.gxVal = tb.Label(self.axValFrame, text=f'{gx}', font=('Monospace',10), bootstyle="dark")
@@ -204,25 +198,19 @@ class ImuVisualizeFrame(tb.Frame):
 
   def animate(self,i):
     try:
-      r = g.eimuV2.readRPY(0)
-      p = g.eimuV2.readRPY(1)
-      y = g.eimuV2.readRPY(2)
+      r, p, y = g.eimuV2.readRPY()
       
       self.rVal.configure(text=f"{r}")
       self.pVal.configure(text=f"{p}")
       self.yVal.configure(text=f"{y}")
 
-      ax = g.eimuV2.readAcc(0)
-      ay = g.eimuV2.readAcc(1)
-      az = g.eimuV2.readAcc(2)
+      ax, ay, az = g.eimuV2.readAcc()
       
       self.axVal.configure(text=f"{ax}")
       self.ayVal.configure(text=f"{ay}")
       self.azVal.configure(text=f"{az}")
 
-      gx = g.eimuV2.readGyro(0)
-      gy = g.eimuV2.readGyro(1)
-      gz = g.eimuV2.readGyro(2)
+      gx, gy, gz = g.eimuV2.readGyro()
       
       self.gxVal.configure(text=f"{gx}")
       self.gyVal.configure(text=f"{gy}")

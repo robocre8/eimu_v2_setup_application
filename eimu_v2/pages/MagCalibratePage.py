@@ -71,38 +71,17 @@ class MagCalibrateFrame(tb.Frame):
     b_vect = np.zeros([3, 1])
     A_mat = np.eye(3)
 
-    g.eimuV2.writeMagHardOffset(0, self.b[0][0])
-    g.eimuV2.writeMagHardOffset(1, self.b[1][0])
-    g.eimuV2.writeMagHardOffset(2, self.b[2][0])
+    g.eimuV2.writeMagHardOffset(self.b[0][0], self.b[1][0], self.b[2][0])
 
-    b_vect[0][0] = g.eimuV2.readMagHardOffset(0)
-    b_vect[1][0] = g.eimuV2.readMagHardOffset(1)
-    b_vect[2][0] = g.eimuV2.readMagHardOffset(2)
-
+    b_vect[0][0], b_vect[1][0], b_vect[2][0] = g.eimuV2.readMagHardOffset()
     
-    g.eimuV2.writeMagSoftOffset0(0, self.A_1[0][0])
-    g.eimuV2.writeMagSoftOffset0(1, self.A_1[0][1])
-    g.eimuV2.writeMagSoftOffset0(2, self.A_1[0][2])
+    g.eimuV2.writeMagSoftOffset0(self.A_1[0][0], self.A_1[0][1], self.A_1[0][2])
+    g.eimuV2.writeMagSoftOffset1(self.A_1[1][0], self.A_1[1][1], self.A_1[1][2])
+    g.eimuV2.writeMagSoftOffset2(self.A_1[2][0], self.A_1[2][1], self.A_1[2][2])
 
-    g.eimuV2.writeMagSoftOffset1(0, self.A_1[1][0])
-    g.eimuV2.writeMagSoftOffset1(1, self.A_1[1][1])
-    g.eimuV2.writeMagSoftOffset1(2, self.A_1[1][2])
-
-    g.eimuV2.writeMagSoftOffset2(0, self.A_1[2][0])
-    g.eimuV2.writeMagSoftOffset2(1, self.A_1[2][1])
-    g.eimuV2.writeMagSoftOffset2(2, self.A_1[2][2])
-
-    A_mat[0][0] = g.eimuV2.readMagSoftOffset0(0)
-    A_mat[0][1] = g.eimuV2.readMagSoftOffset0(1)
-    A_mat[0][2] = g.eimuV2.readMagSoftOffset0(2)
-
-    A_mat[1][0] = g.eimuV2.readMagSoftOffset1(0)
-    A_mat[1][1] = g.eimuV2.readMagSoftOffset1(1)
-    A_mat[1][2] = g.eimuV2.readMagSoftOffset1(2)
-
-    A_mat[2][0] = g.eimuV2.readMagSoftOffset2(0)
-    A_mat[2][1] = g.eimuV2.readMagSoftOffset2(1)
-    A_mat[2][2] = g.eimuV2.readMagSoftOffset2(2)
+    A_mat[0][0], A_mat[0][1], A_mat[0][2] = g.eimuV2.readMagSoftOffset0()
+    A_mat[1][0], A_mat[1][1], A_mat[1][2] = g.eimuV2.readMagSoftOffset1()
+    A_mat[2][0], A_mat[2][1], A_mat[2][2] = g.eimuV2.readMagSoftOffset2()
 
     ################################################
     
@@ -217,13 +196,9 @@ class MagCalibrateFrame(tb.Frame):
   def animate(self,i):
     try:
       if self.calibrated == False:
-        mx = g.eimuV2.readMagRaw(0)
-        my = g.eimuV2.readMagRaw(1)
-        mz = g.eimuV2.readMagRaw(2)
+        mx, my, mz = g.eimuV2.readMagRaw()
       else:
-        mx = g.eimuV2.readMag(0)
-        my = g.eimuV2.readMag(1)
-        mz = g.eimuV2.readMag(2)
+        mx, my, mz = g.eimuV2.readMag()
       
       self.magArray.append([mx,my,mz])
       self.mag_x.append(mx)
