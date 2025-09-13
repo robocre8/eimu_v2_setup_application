@@ -32,9 +32,7 @@ class GyroCalibrateFrame(tb.Frame):
     self.gyValFrame = tb.Frame(self)
     self.gzValFrame = tb.Frame(self)
 
-    gx = g.eimuV2.readGyroOffset(0)
-    gy = g.eimuV2.readGyroOffset(1)
-    gz = g.eimuV2.readGyroOffset(2)
+    gx, gy, gz = g.eimuV2.readGyroOffset()
 
     self.gxText = tb.Label(self.gxValFrame, text="GX-OFFSET:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.gxVal = tb.Label(self.gxValFrame, text=f'{gx}', font=('Monospace',10), bootstyle="dark")
@@ -109,9 +107,7 @@ class GyroCalibrateFrame(tb.Frame):
       self.gyVal.configure(text="0.0")
       self.gzVal.configure(text="0.0")
 
-      gx = g.eimuV2.readGyroRaw(0)
-      gy = g.eimuV2.readGyroRaw(1)
-      gz = g.eimuV2.readGyroRaw(2)
+      gx, gy, gz = g.eimuV2.readGyroRaw()
 
       self.gyro_x.append(gx)
       self.gyro_y.append(gy)
@@ -147,13 +143,9 @@ class GyroCalibrateFrame(tb.Frame):
     gy_offset = (max_y + min_y) / 2
     gz_offset = (max_z + min_z) / 2
 
-    g.eimuV2.writeGyroOffset(0, gx_offset)
-    g.eimuV2.writeGyroOffset(1, gy_offset)
-    g.eimuV2.writeGyroOffset(2, gz_offset)
+    g.eimuV2.writeGyroOffset(gx_offset, gy_offset, gz_offset)
 
-    gx_offset = g.eimuV2.readGyroOffset(0)
-    gy_offset = g.eimuV2.readGyroOffset(1)
-    gz_offset = g.eimuV2.readGyroOffset(2)
+    gx_offset, gy_offset, gz_offset = g.eimuV2.readGyroOffset()
 
     self.gxVal.configure(text=f'{gx_offset}')
     self.gyVal.configure(text=f'{gy_offset}')

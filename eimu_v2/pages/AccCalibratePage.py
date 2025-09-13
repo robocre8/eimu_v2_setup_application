@@ -32,9 +32,7 @@ class AccCalibrateFrame(tb.Frame):
     self.ayValFrame = tb.Frame(self)
     self.azValFrame = tb.Frame(self)
 
-    ax = g.eimuV2.readAccOffset(0)
-    ay = g.eimuV2.readAccOffset(1)
-    az = g.eimuV2.readAccOffset(2)
+    ax, ay, az = g.eimuV2.readAccOffset()
 
     self.axText = tb.Label(self.axValFrame, text="AX-OFFSET:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.axVal = tb.Label(self.axValFrame, text=f'{ax}', font=('Monospace',10), bootstyle="dark")
@@ -109,9 +107,7 @@ class AccCalibrateFrame(tb.Frame):
       self.ayVal.configure(text="0.0")
       self.azVal.configure(text="0.0")
 
-      ax = g.eimuV2.readAccRaw(0)
-      ay = g.eimuV2.readAccRaw(1)
-      az = g.eimuV2.readAccRaw(2)
+      ax, ay, az = g.eimuV2.readAccRaw()
 
       self.acc_x.append(ax)
       self.acc_y.append(ay)
@@ -139,13 +135,9 @@ class AccCalibrateFrame(tb.Frame):
     ay_offset = self.average(self.acc_y)
     az_offset = (self.average(self.acc_z) - 9.8)
 
-    g.eimuV2.writeAccOffset(0, ax_offset)
-    g.eimuV2.writeAccOffset(1, ay_offset)
-    g.eimuV2.writeAccOffset(2, az_offset)
+    g.eimuV2.writeAccOffset(ax_offset, ay_offset, az_offset)
 
-    ax_offset = g.eimuV2.readAccOffset(0)
-    ay_offset = g.eimuV2.readAccOffset(1)
-    az_offset = g.eimuV2.readAccOffset(2)
+    ax_offset, ay_offset, az_offset = g.eimuV2.readAccOffset()
 
     self.axVal.configure(text=f'{ax_offset}')
     self.ayVal.configure(text=f'{ay_offset}')

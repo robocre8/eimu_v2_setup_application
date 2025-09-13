@@ -29,9 +29,7 @@ class GyroVarianceFrame(tb.Frame):
     self.gyValFrame = tb.Frame(self)
     self.gzValFrame = tb.Frame(self)
 
-    gx = g.eimuV2.readGyroVariance(0)
-    gy = g.eimuV2.readGyroVariance(1)
-    gz = g.eimuV2.readGyroVariance(2)
+    gx, gy, gz = g.eimuV2.readGyroVariance()
 
     self.gxText = tb.Label(self.gxValFrame, text="GX-VARIANCE:", font=('Monospace',10, 'bold') ,bootstyle="danger")
     self.gxVal = tb.Label(self.gxValFrame, text=f'{gx}', font=('Monospace',10), bootstyle="dark")
@@ -106,9 +104,7 @@ class GyroVarianceFrame(tb.Frame):
       self.gyVal.configure(text="0.0")
       self.gzVal.configure(text="0.0")
 
-      gyrox_cal = g.eimuV2.readGyro(0)
-      gyroy_cal = g.eimuV2.readGyro(1)
-      gyroz_cal = g.eimuV2.readGyro(2)
+      gyrox_cal, gyroy_cal, gyroz_cal = g.eimuV2.readGyro()
 
       self.gyrox_arr.append(gyrox_cal)
       self.gyroy_arr.append(gyroy_cal)
@@ -137,13 +133,9 @@ class GyroVarianceFrame(tb.Frame):
     gyroy_variance = np.var(self.gyroy_arr)
     gyroz_variance = np.var(self.gyroz_arr)
 
-    g.eimuV2.writeGyroVariance(0, gyrox_variance)
-    g.eimuV2.writeGyroVariance(1, gyroy_variance)
-    g.eimuV2.writeGyroVariance(2, gyroz_variance)
+    g.eimuV2.writeGyroVariance(gyrox_variance, gyroy_variance, gyroz_variance)
 
-    gyrox_variance = g.eimuV2.readGyroVariance(0)
-    gyroy_variance = g.eimuV2.readGyroVariance(1)
-    gyroz_variance = g.eimuV2.readGyroVariance(2)
+    gyrox_variance, gyroy_variance, gyroz_variance = g.eimuV2.readGyroVariance()
 
     self.gxVal.configure(text=f'{gyrox_variance}')
     self.gyVal.configure(text=f'{gyroy_variance}')

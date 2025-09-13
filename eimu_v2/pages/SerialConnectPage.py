@@ -72,8 +72,10 @@ class SerialConnectFrame(tb.Frame):
     try:
       g.eimuV2 = EIMU_V2_FULL(port)
       time.sleep(2)
-      data = g.eimuV2.getFilterGain()
-    except:
+      ref_frame_id = g.eimuV2.getWorldFrameId()
+      return True
+    except Exception as e: # Catching a general exception as a fallback
+      print(f"An unexpected error occurred: {e}")
       return False
 
   
