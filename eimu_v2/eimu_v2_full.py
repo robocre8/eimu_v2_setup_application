@@ -73,6 +73,16 @@ class EIMU_V2_FULL:
         a, b, c, d = struct.unpack('<ffff', payload)  # little-endian float
         return a, b, c, d
     
+    def read_packet6(self):
+        payload = self.ser.read(24)
+        a, b, c, d, e, f = struct.unpack('<ffffff', payload)  # little-endian float
+        return a, b, c, d, e, f
+    
+    def read_packet8(self):
+        payload = self.ser.read(32)
+        a, b, c, d, e, f, g, h = struct.unpack('<ffffffff', payload)  # little-endian float
+        return a, b, c, d, e, f, g, h
+    
     #---------------------------------------------------------------------
 
     def write_data1(self, cmd, pos, val):
@@ -108,6 +118,16 @@ class EIMU_V2_FULL:
         self.send_packet_without_payload(cmd)
         a, b, c, d = self.read_packet4()
         return a, b, c, d
+    
+    def read_data6(self, cmd):
+        self.send_packet_without_payload(cmd)
+        a, b, c, d, e, f = self.read_packet6()
+        return a, b, c, d, e, f
+    
+    def read_data8(self, cmd):
+        self.send_packet_without_payload(cmd)
+        a, b, c, d, e, f, g, h = self.read_packet8()
+        return a, b, c, d, e, f, g, h
         
     #---------------------------------------------------------------------
 
