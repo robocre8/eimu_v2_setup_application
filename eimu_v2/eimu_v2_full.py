@@ -35,6 +35,8 @@ GET_FILTER_GAIN = 0x1E
 SET_FRAME_ID = 0x1F
 GET_FRAME_ID = 0x20
 RESET_PARAMS = 0x21
+READ_QUAT_RPY = 0x22
+READ_ACC_GYRO = 0x23
 
 
 
@@ -265,4 +267,12 @@ class EIMU_V2_FULL:
         res = self.write_data3(WRITE_MAG_S_OFF2, mx, my, mz)
         return int(res)
     
-    #####################################################
+    #---------------------------------------------------------------------
+
+    def readQuatRPY(self):
+        qw, qx, qy, qz, r, p, y, _ = self.read_data8(READ_QUAT_RPY)
+        return round(qw,6), round(qx,6), round(qy,6), round(qz,6), round(r,6), round(p,6), round(y,6)
+    
+    def readAccGyro(self):
+        ax, ay, az, gx, gy, gz = self.read_data6(READ_ACC_GYRO)
+        return round(ax,6), round(ay,6), round(az,6), round(gx,6), round(gy,6), round(gz,6)
