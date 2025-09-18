@@ -155,7 +155,7 @@ class EIMU_V2_FULL:
     
     def readRPYVariance(self):
         r, p, y = self.read_data3(READ_RPY_VAR)
-        return round(r,6), round(p,6), round(y,6)
+        return round(r,8), round(p,8), round(y,8)
     
     def readAcc(self):
         ax, ay, az = self.read_data3(READ_ACC)
@@ -163,7 +163,7 @@ class EIMU_V2_FULL:
     
     def readAccVariance(self):
         ax, ay, az = self.read_data3(READ_ACC_VAR)
-        return round(ax,6), round(ay,6), round(az,6)
+        return round(ax,8), round(ay,8), round(az,8)
     
     def readGyro(self):
         gx, gy, gz = self.read_data3(READ_GYRO)
@@ -171,7 +171,7 @@ class EIMU_V2_FULL:
     
     def readGyroVariance(self):
         gx, gy, gz = self.read_data3(READ_GYRO_VAR)
-        return round(gx,6), round(gy,6), round(gz,6)
+        return round(gx,8), round(gy,8), round(gz,8)
     
     def readMag(self):
         mx, my, mz = self.read_data3(READ_MAG)
